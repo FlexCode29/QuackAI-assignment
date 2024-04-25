@@ -22,6 +22,8 @@ def resolve_categorized_diff(snippet_a, snippet_b):
 
     # Process each change detected in the unified diff
     for line in diff:
+        if line.startswith(('++', '--')):
+            continue
         if line.startswith(('+', '-')):
             action = line[0]
             clean_line = line[1:].strip()
@@ -48,20 +50,3 @@ def resolve_categorized_diff(snippet_a, snippet_b):
 
     return categorized_diff
 
-# Test the function with snippet A and B
-snippet_a = (
-    "# Router definition"
-    "\napi_router = APIRouter()"
-)
-snippet_b = (
-    "# Make sure endpoint are immune to missing trailing slashes"
-    "\napi_router = APIRouter("
-    "\n\tredirect_slashes=True"
-    "\n)"
-)
-
-diff_ab = resolve_categorized_diff(snippet_a, snippet_b)
-
-# Improved output formatting
-print("Categorized diff between snippet A and B:")
-print(diff_ab)

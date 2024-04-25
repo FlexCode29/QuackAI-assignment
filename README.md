@@ -27,6 +27,64 @@ A suite of unit tests is provided to ensure the functionality of the Code Diff R
 python -m unittest
 ```
 
+### Test Scenarios
+
+Below we detail the tests included in the suite:
+
+#### Interpreter Changes
+Tests the resolver's ability to detect changes that affect the execution:
+
+```python
+snippet_a = "x = 5\n"
+snippet_b = "x = 10\n"
+# Expected: Modification in variable assignment (interpreter change).
+```
+
+#### Formatting Changes
+Tests detection of changes in whitespace that don't affect interpreter execution:
+
+```python
+snippet_a = "def func():\n    return 42\n"
+snippet_b = "def func():\n\treturn 42\n"
+# Expected: Alteration in indentation (formatting change).
+```
+
+#### Comment Changes
+Evaluates how the resolver perceives modifications in comments:
+
+```python
+snippet_a = "# Old comment\nx = 5\n"
+snippet_b = "# New comment\nx = 5\n"
+# Expected: Changes in comment content (comment change).
+```
+
+#### Combined Changes
+Measures the capability to categorize a combination of changes:
+
+```python
+snippet_a = "# Old comment\nx = 5\n"
+snippet_b = "# New comment\nx = 10\n"
+# Expected: Changes in both comments and executable code.
+```
+
+#### No Changes
+Confirms that the resolver reports no changes when two snippets are identical:
+
+```python
+snippet_a = "x = 5\n"
+snippet_b = "x = 5\n"
+# Expected: No differences detected.
+```
+
+#### Add or Remove Lines
+Verifies correct detection when lines are added or removed:
+
+```python
+snippet_a = "x = 5\ny = 10\n"
+snippet_b = "y = 10\nz = 15\n"
+# Expected: Line removal and addition (interpreter changes).
+```
+
 ### Code Structure
 
 The `resolve_categorized_diff` function compares two Python code snippets and categorizes the differences. The steps performed by this function are:

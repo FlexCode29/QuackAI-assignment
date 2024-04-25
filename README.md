@@ -1,6 +1,5 @@
 # QuackAI-assignment
 
-# Code Diff Resolver
 
 ## Introduction
 
